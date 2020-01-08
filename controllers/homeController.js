@@ -17,7 +17,9 @@ exports.home = (req, res, next) => {
     //   console.log('year: '+ (element.dateBill.getYear()+1900));
     //   console.log('Day: ' + element.dateBill.getDate());
     // });
-    res.render('home/index', { bills: bills });
+    console.log(req.user);
+    console.log(req.user.email);
+    res.render('home/index', { bills: bills, email:req.user.email });
   });
 
 }

@@ -177,14 +177,14 @@ var fs = require("fs");
 exports.product_list = function (req, res, next) {
   Product.find({}).populate('category').exec(function (err, products) {
     if (err) throw err;
-    res.render('product/index', { products: products })
+    res.render('product/index', { products: products,email:req.user.email })
   })
 
 
 };
 exports.getFormAdd = (req, res, next) => {
   Category.find({}).exec(function (err, categories) {
-    res.render('product/add', { categories: categories });
+    res.render('product/add', { categories: categories,email:req.user.email });
   })
 };
 
@@ -263,7 +263,7 @@ exports.getEdit = function (req, res, next) {
   Product.findById({ _id: req.params.id }).populate('category').exec(function (err, product) {
     if (err) throw err;
     Category.find({}, function (err, categories) {
-      res.render('product/edit', { product: product, categories: categories });
+      res.render('product/edit', { product: product, categories: categories ,email:req.user.email});
     })
   })
 };
@@ -323,7 +323,7 @@ exports.product_detail = function (req, res, next) {
       return next(err);
     }
     // Successful, so render.
-    res.render('single', { title: 'product Detail', product: results.product });
+    res.render('single', { title: 'product Detail', product: results.product, email:req.user.email });
 
 
   }
@@ -332,3 +332,7 @@ exports.product_detail = function (req, res, next) {
   );
 
 };
+
+exports.updateImage = (req,res,next) => {
+  console.log("update image");
+}

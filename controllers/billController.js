@@ -25,7 +25,7 @@ exports.getList = (req, res, next) => {
         //      console.log(today);
         //      element.dateBill = today;
         // });
-        res.render('bill/index', { bills: bills })
+        res.render('bill/index', { bills: bills,email:req.user.email })
     })
 
 }
@@ -59,7 +59,7 @@ exports.detail = (req, res, next) => {
       DetailBill.find({'bill': req.params.id }).populate('product').exec(function (err, details) {
         if (err) throw err;
         console.log(details);
-        res.render('bill/detail', { details: details});
+        res.render('bill/detail', { details: details, email:req.user.email});
 
     })
 }

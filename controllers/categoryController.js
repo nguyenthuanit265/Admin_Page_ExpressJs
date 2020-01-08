@@ -5,13 +5,13 @@ const async = require('async');
 
 exports.getList = (req, res, next) => {
     Category.find({}, function (err, categories) {
-        res.render('category/index', { categories: categories });
+        res.render('category/index', { categories: categories,email:req.user.email });
     })
 
 }
 
 exports.getFormAdd = (req, res, next) => {
-    res.render('category/add');
+    res.render('category/add',{email:req.user.email});
 }
 
 exports.postAdd = (req, res, next) => {
@@ -38,7 +38,7 @@ exports.getEdit = (req, res, next) => {
     console.log("id category edit: " + id);
     Category.findById(id, function (err, category) {
 
-        res.render('category/edit', { category: category });
+        res.render('category/edit', { category: category,email:req.user.email });
     })
 
 }

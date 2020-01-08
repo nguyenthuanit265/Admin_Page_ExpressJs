@@ -25,7 +25,7 @@ exports.getList = (req, res, next) => {
         //      console.log(today);
         //      element.dateBill = today;
         // });
-        res.render('detail-bill/index', { details: details })
+        res.render('detail-bill/index', { details: details,email:req.user.email })
     })
 
 }

@@ -16,6 +16,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "express-passport-logout": "^0.1.0",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
     "handlebars-helpers": "^0.10.0",

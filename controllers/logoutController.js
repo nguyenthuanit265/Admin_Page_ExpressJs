@@ -1,7 +1,8 @@
-
+var logout = require('express-passport-logout');
+ 
+//app.get('/logout', logout());
 exports.logout = (req,res,next) => {
-    // delete session in server
-   
-    req.session.destroy();
-    res.redirect('/login')
+    req.session.destroy()
+    req.logout()
+    res.redirect('/admin/login')
 }
