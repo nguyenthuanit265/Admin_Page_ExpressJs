@@ -5,13 +5,13 @@ const async = require('async');
 
 exports.getList = (req, res, next) => {
     Role.find({}, function (err, roles) {
-        res.render('role/index', { roles: roles });
+        res.render('role/index', { roles: roles, email:req.user.email });
     })
 
 }
 
 exports.getFormAdd = (req, res, next) => {
-    res.render('role/add');
+    res.render('role/add',{email:req.user.email});
 }
 
 exports.postAdd = (req, res, next) => {
@@ -36,7 +36,7 @@ exports.getEdit = (req, res, next) => {
     console.log("id role edit: " + id);
     Role.findById(id, function (err, role) {
 
-        res.render('role/edit', { role: role });
+        res.render('role/edit', { role: role,email:req.user.email });
     })
 
 }

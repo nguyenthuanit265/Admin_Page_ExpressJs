@@ -45,7 +45,7 @@ router.get('/**', (req, res, next) => {
                 return;
             }
 
-        } else if (action.startsWith('/admin/product')) {
+        } else if (action.startsWith('/admin/product')||action.startsWith('/admin/home')) {
             if (roleName.localeCompare('ROLE_MANAGER')==0 || roleName.localeCompare('ROLE_ADMIN')==0||roleName.localeCompare('ROLE_EMPLOYEE')==0) {
                 req.next();
                 return;
