@@ -207,6 +207,7 @@ router.get('/product/single/:id', productController.product_detail);
 
 
 router.get('/product/update-img/:id', productController.updateImage);
+router.post('/product/update-img', productController.postUpdateImage);
 
 
 

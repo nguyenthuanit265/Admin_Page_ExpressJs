@@ -5,7 +5,7 @@
                 <li class="breadcrumb-item"><a href="/admin/home"> <i class="feather icon-home"></i> Trang chủ
                     </a></li>
                 <li class="breadcrumb-item"><a href="#!">Danh sách sản phẩm
-                        </a></li>
+                    </a></li>
             </ul>
         </div>
     </div>
@@ -37,16 +37,20 @@
                                 <td>{{name}}</td>
                                 <td>{{description}}</td>
                                 <td><img src='{{image}}' height="50" class="p-1 border" /></td>
-                                
+
                                 <td class="text-danger font-weight-bold">{{price}}</td>
                                 <td>{{category.name}}</td>
                                 <td>
-                                     <a href="/admin/product/update-img/{{_id}}" class="btn btn-sm btn-success btn-round py-1 font-weight-bold">Cập nhật hình ảnh</a>
-                                   <a href="/admin/product/edit/{{_id}}" class="btn btn-sm btn-info btn-round py-1 font-weight-bold">Sửa</a>
-                                    <a href="/admin/product/delete/{{_id}}" class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">Xóa</a>
+                                    {{!-- <a href="/admin/product/update-img/{{_id}}"
+                                        class="btn btn-sm btn-success btn-round py-1 font-weight-bold">Cập nhật hình
+                                        ảnh</a> --}}
+                                    <a href="/admin/product/edit/{{_id}}"
+                                        class="btn btn-sm btn-info btn-round py-1 font-weight-bold">Sửa</a>
+                                    <a href="/admin/product/delete/{{_id}}"
+                                        class="btn btn-sm btn-danger btn-round py-1 font-weight-bold">Xóa</a>
                                 </td>
                             </tr>
-                             {{/each}}
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>

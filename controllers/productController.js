@@ -1,12 +1,12 @@
 'use strict';
 const cloudinary = require('../config/ModelCloudinary')
 const Product = require('../models/product');
-const path =require('path')
+const path = require('path')
 const async = require('async');
 const Category = require('../models/category')
 const Handlebars = require('handlebars-helpers')();
-var multer  = require('multer');
-var upload = multer({ dest: '/tmp/'});
+var multer = require('multer');
+var upload = multer({ dest: '/tmp/' });
 var fs = require("fs");
 
 
@@ -177,14 +177,14 @@ var fs = require("fs");
 exports.product_list = function (req, res, next) {
   Product.find({}).populate('category').exec(function (err, products) {
     if (err) throw err;
-    res.render('product/index', { products: products,email:req.user.email })
+    res.render('product/index', { products: products, email: req.user.email })
   })
 
 
 };
 exports.getFormAdd = (req, res, next) => {
   Category.find({}).exec(function (err, categories) {
-    res.render('product/add', { categories: categories,email:req.user.email });
+    res.render('product/add', { categories: categories, email: req.user.email });
   })
 };
 
@@ -216,7 +216,7 @@ exports.postAdd = (req, res, next) => {
     //   imageId: result.id
     // }
     console.log(result.url);
-   
+
     let productAdd = new Product({
       image: result.url,
       name: name,
@@ -224,13 +224,13 @@ exports.postAdd = (req, res, next) => {
       price: price,
       category: category
     });
-  
+
     productAdd.save(err => {
       if (err) throw err;
       console.log('Product saved....!');
       res.redirect('/admin/product');
     });
-  
+
   })
 
 
@@ -263,7 +263,7 @@ exports.getEdit = function (req, res, next) {
   Product.findById({ _id: req.params.id }).populate('category').exec(function (err, product) {
     if (err) throw err;
     Category.find({}, function (err, categories) {
-      res.render('product/edit', { product: product, categories: categories ,email:req.user.email});
+      res.render('product/edit', { product: product, categories: categories, email: req.user.email });
     })
   })
 };
@@ -275,7 +275,7 @@ exports.postEdit = (req, res, next) => {
   // });
   const query = Product.findById({ _id: req.body.id });
   query.exec(function (err, result) {
-    
+
     if (err) throw err;
     // change old value with new
 
@@ -283,7 +283,7 @@ exports.postEdit = (req, res, next) => {
     result.description = req.body.description;
     result.price = req.body.price;
     result.category = req.body.category;
-    result.image= req.body.image;
+    result.image = req.body.image;
 
 
     // save updated results
@@ -323,7 +323,7 @@ exports.product_detail = function (req, res, next) {
       return next(err);
     }
     // Successful, so render.
-    res.render('single', { title: 'product Detail', product: results.product, email:req.user.email });
+    res.render('single', { title: 'product Detail', product: results.product, email: req.user.email });
 
 
   }
@@ -333,6 +333,59 @@ exports.product_detail = function (req, res, next) {
 
 };
 
-exports.updateImage = (req,res,next) => {
+exports.updateImage = (req, res, next) => {
   console.log("update image");
+  let idUpdateImg = req.params.id;
+  console.log('id update image: ' + idUpdateImg);
+  Product.findById({ _id: req.params.id }).exec(function (err, product) {
+    if (err) throw err;
+
+    res.render('product/update-image', { product: product, email: req.user.email });
+  })
+
+}
+
+exports.postUpdateImage = (req, res, next) => {
+  console.log('id post update img: ' + req.body.id );
+  const query = Product.findById({ _id: req.body.id });
+  query.exec(function (err, product) {
+
+    if (err) throw err;
+    // change old value with new
+
+    product.name = req.body.name;
+    product.description = req.body.description;
+    product.price = req.body.price;
+    product.category = req.body.category;
+
+
+
+    // let image=req.body.image;
+    if (!req.file) return res.send('Please upload a file')
+    var file = __dirname + '/' + req.file.filename;
+    cloudinary.uploadSingle(req.file.path).then((result) => {
+
+      console.log(result.url);
+
+      // let productAdd = new Product({
+
+      //   image: result.url,
+      //   name: name,
+      //   description: description,
+      //   price: price,
+      //   category: category
+      // });
+      product.image = result.url;
+
+
+
+      // save updated results
+      product.save(err => {
+        if (err) throw err;
+        console.log('Product Updated....!');
+        res.redirect('/admin/product');
+      });
+    });
+
+  })
 }
